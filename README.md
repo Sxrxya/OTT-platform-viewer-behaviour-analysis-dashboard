@@ -118,8 +118,7 @@ OTT-Platform-Viewer-Analytics/
 ---
 ## 🧑‍💻 Author
 **Data Analytics & Visualization Project** — OTT Platform Analytics
-- **GitHub:** Your GitHub Profile
-- **LinkedIn:** Your LinkedIn Profile
+- **GitHub:**https://github.com/selvapriyanB
 
 ---
 ## ⭐ Conclusion
