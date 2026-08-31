@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTT Viewer Behavior Analytics</title>
+    <meta name="description" content="A comprehensive data analytics dashboard for OTT platform viewer behavior, churn risk, and engagement.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PapaParse for CSV reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-play"></i>
+                <span>StreamAnalytics</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-target="tab-exec"><a href="#"><i class="fa-solid fa-chart-pie"></i> Executive Summary</a></li>
+                <li data-target="tab-demo"><a href="#"><i class="fa-solid fa-users"></i> Viewer Demographics</a></li>
+                <li data-target="tab-churn"><a href="#"><i class="fa-solid fa-heart-crack"></i> Churn & Retention</a></li>
+                <li data-target="tab-rev"><a href="#"><i class="fa-solid fa-money-bill-trend-up"></i> Revenue</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div>
+                    <h1>Executive Dashboard</h1>
+                    <p class="subtitle">Real-time viewer behavior & platform analytics</p>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin&background=random" alt="User Profile">
+                </div>
+            </header>
+
+            <!-- Tab 1: Executive Summary -->
+            <div id="tab-exec" class="tab-content active">
+                <section class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon blue"><i class="fa-solid fa-users"></i></div>
+                        <div class="kpi-details">
+                            <h3>Total Subscribers</h3>
+                            <h2 id="total-subscribers">20,000</h2>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon purple"><i class="fa-solid fa-clock"></i></div>
+                        <div class="kpi-details">
+                            <h3>Total Watch Hours</h3>
+                            <h2 id="total-watch-hours">1.45M</h2>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon red"><i class="fa-solid fa-user-minus"></i></div>
+                        <div class="kpi-details">
+                            <h3>Overall Churn Rate</h3>
+                            <h2 id="churn-rate">14.2%</h2>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon green"><i class="fa-solid fa-star"></i></div>
+                        <div class="kpi-details">
+                            <h3>Avg. Customer Rating</h3>
+                            <h2 id="avg-rating">4.1 / 5.0</h2>
+                        </div>
+                    </div>
+                </section>
+                <section class="charts-grid-2" style="margin-top: 1.5rem;">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2>Peak Streaming Times</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="timeChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 2: Viewer Demographics -->
+            <div id="tab-demo" class="tab-content">
+                <section class="charts-grid-2">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2>Viewer Preferences by Device</h2>
+                            <span class="badge blue-badge">Smart TV leads</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="deviceChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2>Top Genres</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="genreChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 3: Churn & Retention -->
+            <div id="tab-churn" class="tab-content">
+                <section class="charts-grid-2">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2>Churn vs. Engagement (Watch Hours)</h2>
+                            <span class="badge red-badge">High Risk &lt; 15hrs</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="churnEngagementChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2>Subscription Tier Retention</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="tierChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 4: Revenue -->
+            <div id="tab-rev" class="tab-content">
+                <section class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon green"><i class="fa-solid fa-dollar-sign"></i></div>
+                        <div class="kpi-details">
+                            <h3>Avg. Monthly Revenue</h3>
+                            <h2 id="monthly-revenue">$295K</h2>
+                        </div>
+                    </div>
+                </section>
+                <section class="charts-grid-2" style="margin-top: 1.5rem;">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2>Revenue by Subscription Tier</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
